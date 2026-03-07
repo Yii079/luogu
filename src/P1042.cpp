@@ -1,52 +1,33 @@
 #include <iostream>
-#include <vector>
+#include <string>
 #include <cmath>
 using namespace std;
 
+void func(int n, string s)
+{
+    int len = s.size();
+    int w = 0, l = 0;
+    for (int i = 0; i < len; i++)
+    {
+        char c = s[i];
+        c == 'W' ? w++ : l++;
+        if (max(w, l) >= n && abs(w - l) >= 2)
+        {
+            cout << w << ':' << l << endl;
+            w = 0, l = 0;
+        }
+    }
+    cout << w << ':' << l << endl;
+}
 int main()
 {
-    vector<int> count_w0(1, 0), count_l0(1, 0), count_w1(1, 0), count_l1(1, 0);
     char c;
-    while (cin >> c)
-    {
-        if (c == 'E')
-            break;
-        else
-        {
-            if (count_w0.back() + count_l0.back() >= 11 && abs(count_w0.back() - count_l0.back()) >= 2)
-            {
-                count_w0.push_back(0);
-                count_l0.push_back(0);
-            }
-            if (count_w1.back() + count_l1.back() >= 21 && abs(count_w1.back() - count_l1.back()) >= 2)
-            {
-                count_w1.push_back(0);
-                count_l1.push_back(0);
-            }
-        }
-
-        if (c == 'W') 
-        {
-            count_w0.back()++;
-            count_w1.back()++;
-        }
-        else if (c == 'L')
-        {
-            count_l0.back()++;
-            count_l1.back()++;
-        }
-    }
-    int n = count_w0.size();
-    for (int i = 0; i < n; i++)
-    {
-        cout << count_w0[i] << ":" << count_l0[i] << endl;
-    }
-    cout << endl;
-    n = count_w1.size();
-    for (int i = 0; i < n; i++)
-    {
-        cout << count_w1[i] << ":" << count_l1[i] << endl;
-    }
+    string s;
+    while (cin >> c, c != 'E') 
+        s += c;
+    func(11, s);
+    puts("");
+    func(21, s);
     return 0;
 }
 
